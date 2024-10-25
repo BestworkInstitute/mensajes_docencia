@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +16,6 @@
             justify-content: center;
             height: 100vh;
         }
-
         .container {
             background-color: white;
             border-radius: 12px;
@@ -27,31 +25,39 @@
             padding: 20px;
             text-align: center;
         }
-
         .hidden {
             display: none;
         }
-
         .message-warning {
             color: red;
             font-size: 0.875rem;
         }
+        /* Button styling */
+        button {
+            background-color: #3490dc;
+            color: white;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2779bd;
+        }
     </style>
 </head>
-
 <body class="bg-gray-100">
     <div class="container">
         <!-- Logo -->
         <img src="https://bestwork.cl/wp-content/uploads/2023/05/Logo.png" alt="Logo Bestwork" class="mb-6 mx-auto w-32">
-
         <!-- Login Panel -->
         <div id="loginPanel" class="login-container">
             <h2 class="text-2xl font-bold mb-4">Iniciar Sesión</h2>
             <input type="password" id="clave" aria-label="Ingresa la clave" placeholder="Ingresa la Clave"
                 class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
-            <button onclick="login()" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg transition duration-300">Ingresar</button>
+            <button onclick="login()">Ingresar</button>
         </div>
-
         <!-- Main Panel (hidden initially) -->
         <div id="mainPanel" class="hidden">
             <h2 class="text-2xl font-bold mb-4">Enviar Mensaje</h2>
@@ -65,22 +71,17 @@
                 <option value="PAGOS">PAGOS</option>
                 <option value="OTRO">OTRO</option>
             </select>
-
             <!-- New message input field -->
-            <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..." aria-label="Mensaje" maxlength="30"
+            <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..." aria-label="Mensaje" maxlength="150"
                 class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full"></textarea>
-            <p class="message-warning">No usar más de 30 caracteres</p>
-
-            <button id="enviarMensajesBtn" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg transition duration-300">Enviar Mensaje</button>
-
+            <p class="message-warning">No usar más de 150 caracteres</p>
+            <button id="enviarMensajesBtn">Enviar Mensaje</button>
             <!-- Console Output -->
             <div id="consoleOutput" class="mt-6 bg-gray-800 text-green-300 p-4 rounded-lg h-40 overflow-y-auto"></div>
         </div>
     </div>
-
     <script>
         const CLAVE_CORRECTA = 'BESTWORK2024';
-
         function login() {
             const clave = document.getElementById('clave').value;
             if (clave === CLAVE_CORRECTA) {
@@ -93,13 +94,11 @@
         }
 
         const flow = "bb848b58-c891-4aec-ac21-738a857bc778";
-
         async function enviarMensaje() {
             const nombre = document.getElementById('nombre').value;
             const celular = document.getElementById('celular').value;
             const area = document.getElementById('area').value;
             const mensaje = document.getElementById('mensaje').value; // Custom message from user
-
             const url = `https://flows.messagebird.com/flows/${flow}/invoke`;
             const headers = {
                 CELULAR: celular,
@@ -107,7 +106,6 @@
                 MENSAJE: mensaje,
                 AREA: area
             };
-
             try {
                 const response = await axios.post(url, null, { params: headers });
                 logToConsole(`Mensaje "${mensaje}" enviado a ${nombre} (${celular})`);
@@ -117,7 +115,7 @@
         }
 
         document.getElementById("enviarMensajesBtn").addEventListener("click", enviarMensaje);
-
+        
         function logToConsole(message) {
             const consoleOutput = document.getElementById('consoleOutput');
             const timestamp = new Date().toLocaleTimeString();
@@ -126,5 +124,4 @@
         }
     </script>
 </body>
-
 </html>
