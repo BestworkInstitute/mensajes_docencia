@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
             justify-content: center;
             height: 100vh;
         }
+
         .container {
             background-color: white;
             border-radius: 12px;
@@ -25,15 +27,18 @@
             padding: 20px;
             text-align: center;
         }
+
         .hidden {
             display: none;
         }
+
         .message-warning {
             color: red;
             font-size: 0.875rem;
         }
     </style>
 </head>
+
 <body class="bg-gray-100">
     <div class="container">
         <!-- Logo -->
@@ -42,15 +47,18 @@
         <!-- Login Panel -->
         <div id="loginPanel" class="login-container">
             <h2 class="text-2xl font-bold mb-4">Iniciar Sesión</h2>
-            <input type="password" id="clave" aria-label="Ingresa la clave" placeholder="Ingresa la Clave" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
+            <input type="password" id="clave" aria-label="Ingresa la clave" placeholder="Ingresa la Clave"
+                class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
             <button onclick="login()" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg transition duration-300">Ingresar</button>
         </div>
 
         <!-- Main Panel (hidden initially) -->
         <div id="mainPanel" class="hidden">
             <h2 class="text-2xl font-bold mb-4">Enviar Mensaje</h2>
-            <input type="text" id="nombre" placeholder="Nombre Alumno" aria-label="Nombre" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
-            <input type="text" id="celular" placeholder="Celular Alumno" aria-label="Celular" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
+            <input type="text" id="nombre" placeholder="Nombre Alumno" aria-label="Nombre"
+                class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
+            <input type="text" id="celular" placeholder="Celular Alumno" aria-label="Celular"
+                class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
             <select id="area" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
                 <option value="TALLERES">TALLERES</option>
                 <option value="PLATAFORMA">PLATAFORMA</option>
@@ -59,8 +67,9 @@
             </select>
 
             <!-- New message input field -->
-            <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..." aria-label="Mensaje" maxlength="120" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full"></textarea>
-            <p class="message-warning">No usar más de 120 caracteres</p>
+            <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..." aria-label="Mensaje" maxlength="30"
+                class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full"></textarea>
+            <p class="message-warning">No usar más de 30 caracteres</p>
 
             <button id="enviarMensajesBtn" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg transition duration-300">Enviar Mensaje</button>
 
@@ -117,4 +126,5 @@
         }
     </script>
 </body>
+
 </html>
