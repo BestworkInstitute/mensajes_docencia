@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envio de Mensajes</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+        .message-warning {
+            color: red;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container">
+        <!-- Logo -->
+        <img src="https://bestwork.cl/wp-content/uploads/2023/05/Logo.png" alt="Logo Bestwork" class="mb-6 mx-auto w-32">
+
+        <!-- Login Panel -->
+        <div id="loginPanel" class="login-container">
+            <h2 class="text-2xl font-bold mb-4">Iniciar Sesión</h2>
+            <input type="password" id="clave" aria-label="Ingresa la clave" placeholder="Ingresa la Clave" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
+            <button onclick="login()" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg transition duration-300">Ingresar</button>
+        </div>
+
+        <!-- Main Panel (hidden initially) -->
+        <div id="mainPanel" class="hidden">
+            <h2 class="text-2xl font-bold mb-4">Enviar Mensaje</h2>
+            <input type="text" id="nombre" placeholder="Nombre Alumno" aria-label="Nombre" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
+            <input type="text" id="celular" placeholder="Celular Alumno" aria-label="Celular" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
+            <select id="area" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full">
+                <option value="TALLERES">TALLERES</option>
+                <option value="PLATAFORMA">PLATAFORMA</option>
+                <option value="PAGOS">PAGOS</option>
+                <option value="OTRO">OTRO</option>
+            </select>
+
+            <!-- New message input field -->
+            <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..." aria-label="Mensaje" maxlength="120" class="border-2 border-blue-400 p-2 rounded-lg mb-4 w-full"></textarea>
+            <p class="message-warning">No usar más de 120 caracteres</p>
+
+            <button id="enviarMensajesBtn" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg transition duration-300">Enviar Mensaje</button>
+
+            <!-- Console Output -->
+            <div id="consoleOutput" class="mt-6 bg-gray-800 text-green-300 p-4 rounded-lg h-40 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        const CLAVE_CORRECTA = 'BESTWORK2024';
+
+        function login() {
+            const clave = document.getElementById('clave').value;
+            if (clave === CLAVE_CORRECTA) {
+                document.getElementById('loginPanel').classList.add('hidden');
+                document.getElementById('mainPanel').classList.remove('hidden');
+                logToConsole('Bienvenido');
+            } else {
+                alert('Clave incorrecta');
+            }
+        }
+
+        const flow = "bb848b58-c891-4aec-ac21-738a857bc778";
+
+        async function enviarMensaje() {
+            const nombre = document.getElementById('nombre').value;
+            const celular = document.getElementById('celular').value;
+            const area = document.getElementById('area').value;
+            const mensaje = document.getElementById('mensaje').value; // Custom message from user
+
+            const url = `https://flows.messagebird.com/flows/${flow}/invoke`;
+            const headers = {
+                CELULAR: celular,
+                NOMBRE: nombre,
+                MENSAJE: mensaje,
+                AREA: area
+            };
+
+            try {
+                const response = await axios.post(url, null, { params: headers });
+                logToConsole(`Mensaje "${mensaje}" enviado a ${nombre} (${celular})`);
+            } catch (error) {
+                logToConsole(`Error enviando mensaje a ${nombre} (${celular}): ${error}`);
+            }
+        }
+
+        document.getElementById("enviarMensajesBtn").addEventListener("click", enviarMensaje);
+
+        function logToConsole(message) {
+            const consoleOutput = document.getElementById('consoleOutput');
+            const timestamp = new Date().toLocaleTimeString();
+            consoleOutput.innerHTML += `<p>[${timestamp}] ${message}</p>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+    </script>
+</body>
+</html>
